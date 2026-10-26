@@ -58,6 +58,7 @@ public isolated client class Client {
     # Create a new class
     #
     # + headers - Headers to be sent with the request 
+    # + payload - Details of the class to create 
     # + return - The new class details 
     remote isolated function createClass(ClassCreation payload, map<string|string[]> headers = {}) returns ClassDetails|error {
         string resourcePath = string `/classes`;
@@ -171,6 +172,7 @@ public isolated client class Client {
     #
     # + 'class - Unique identifier of the class
     # + headers - Headers to be sent with the request 
+    # + payload - Details of the assignment to create 
     # + return - The assignment has been created 
     remote isolated function createClassAssignment(string 'class, ClassAssignmentUpdate payload, map<string|string[]> headers = {}) returns Assignment|error {
         string resourcePath = string `/classes/${getEncodedUri('class)}/assignments`;
@@ -196,6 +198,7 @@ public isolated client class Client {
     # + 'class - Unique identifier of the class
     # + assignment - Unique identifier of the assignment
     # + headers - Headers to be sent with the request 
+    # + payload - Assignment properties to update 
     # + return - The assignment has been updated 
     remote isolated function updateClassAssignment(string 'class, string assignment, ClassAssignmentUpdate payload, map<string|string[]> headers = {}) returns Assignment|error {
         string resourcePath = string `/classes/${getEncodedUri('class)}/assignments/${getEncodedUri(assignment)}`;
@@ -221,6 +224,7 @@ public isolated client class Client {
     # + 'class - Unique identifier of the class
     # + assignment - Unique identifier of the assignment
     # + headers - Headers to be sent with the request 
+    # + payload - Destination of the assignment copy 
     # + return - The new created assignment 
     remote isolated function copyAssignment(string 'class, string assignment, AssignmentCopy payload, map<string|string[]> headers = {}) returns AssignmentCopyResponse|error {
         string resourcePath = string `/classes/${getEncodedUri('class)}/assignments/${getEncodedUri(assignment)}/copy`;
@@ -269,6 +273,7 @@ public isolated client class Client {
     # + 'class - Unique identifier of the class
     # + assignment - Unique identifier of the assignment
     # + headers - Headers to be sent with the request 
+    # + payload - Submission content to create, edit or submit 
     # + return - The submission 
     remote isolated function createSubmission(string 'class, string assignment, AssignmentSubmissionUpdate payload, map<string|string[]> headers = {}) returns AssignmentSubmission|error {
         string resourcePath = string `/classes/${getEncodedUri('class)}/assignments/${getEncodedUri(assignment)}/submissions`;
@@ -318,6 +323,7 @@ public isolated client class Client {
     # + assignment - Unique identifier of the assignment
     # + submission - Unique identifier of the submission
     # + headers - Headers to be sent with the request 
+    # + payload - Submission properties to update 
     # + return - The submission 
     remote isolated function editSubmission(string 'class, string assignment, string submission, AssignmentSubmissionUpdate payload, map<string|string[]> headers = {}) returns AssignmentSubmission|error {
         string resourcePath = string `/classes/${getEncodedUri('class)}/assignments/${getEncodedUri(assignment)}/submissions/${getEncodedUri(submission)}`;
@@ -369,6 +375,7 @@ public isolated client class Client {
     # + assignment - Unique identifier of the assignment
     # + submission - Unique identifier of the submission
     # + headers - Headers to be sent with the request 
+    # + payload - The feedback comment to add 
     # + return - The comment 
     remote isolated function addSubmissionComment(string 'class, string assignment, string submission, AssignmentSubmissionCommentCreation payload, map<string|string[]> headers = {}) returns AssignmentSubmissionComment|error {
         string resourcePath = string `/classes/${getEncodedUri('class)}/assignments/${getEncodedUri(assignment)}/submissions/${getEncodedUri(submission)}/comments`;
@@ -385,6 +392,7 @@ public isolated client class Client {
     # + submission - Unique identifier of the submission
     # + comment - Unique identifier of the comment
     # + headers - Headers to be sent with the request 
+    # + payload - The updated feedback comment 
     # + return - The comment 
     remote isolated function updateSubmissionComment(string 'class, string assignment, string submission, string comment, AssignmentSubmissionCommentCreation payload, map<string|string[]> headers = {}) returns AssignmentSubmissionComment|error {
         string resourcePath = string `/classes/${getEncodedUri('class)}/assignments/${getEncodedUri(assignment)}/submissions/${getEncodedUri(submission)}/comments/${getEncodedUri(comment)}`;
@@ -445,6 +453,7 @@ public isolated client class Client {
     # Create a new collection
     #
     # + headers - Headers to be sent with the request 
+    # + payload - Details of the collection to create 
     # + return - Collection created 
     remote isolated function createCollection(CollectionCreation payload, map<string|string[]> headers = {}) returns Collection|error {
         string resourcePath = string `/collections`;
@@ -486,6 +495,7 @@ public isolated client class Client {
     # - `collaborations`: All shared scores by the user or someone else
     # - `likes`: Liked scores
     # + headers - Headers to be sent with the request 
+    # + payload - Collection metadata to update 
     # + return - Collection details 
     remote isolated function editCollection(string collection, CollectionModification payload, map<string|string[]> headers = {}) returns Collection|error {
         string resourcePath = string `/collections/${getEncodedUri(collection)}`;
@@ -558,12 +568,10 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - Score details 
-    remote isolated function addScoreToCollection(string collection, string score, record {} payload, map<string|string[]> headers = {}, *AddScoreToCollectionQueries queries) returns ScoreDetails|error {
+    remote isolated function addScoreToCollection(string collection, string score, map<string|string[]> headers = {}, *AddScoreToCollectionQueries queries) returns ScoreDetails|error {
         string resourcePath = string `/collections/${getEncodedUri(collection)}/scores/${getEncodedUri(score)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
-        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(payload).ensureType());
-        request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
         return self.clientEp->put(resourcePath, request, headers);
     }
 
@@ -578,13 +586,10 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - Score removed from the collection 
-    remote isolated function deleteScoreFromCollection(string collection, string score, record {} payload, map<string|string[]> headers = {}, *DeleteScoreFromCollectionQueries queries) returns error? {
+    remote isolated function deleteScoreFromCollection(string collection, string score, map<string|string[]> headers = {}, *DeleteScoreFromCollectionQueries queries) returns error? {
         string resourcePath = string `/collections/${getEncodedUri(collection)}/scores/${getEncodedUri(score)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
-        http:Request request = new;
-        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(payload).ensureType());
-        request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
-        return self.clientEp->delete(resourcePath, request, headers);
+        return self.clientEp->delete(resourcePath, headers = headers);
     }
 
     # List education resources in a library or folder
@@ -602,6 +607,7 @@ public isolated client class Client {
     # Create a new education resource
     #
     # + headers - Headers to be sent with the request 
+    # + payload - Details of the education resource to create 
     # + return - Fetched resource 
     remote isolated function createEduResource(EduResourceCreation payload, map<string|string[]> headers = {}) returns EduResource|error {
         string resourcePath = string `/eduResources`;
@@ -634,6 +640,7 @@ public isolated client class Client {
     #
     # + 'resource - Unique identifier of the resource
     # + headers - Headers to be sent with the request 
+    # + payload - Education resource metadata to update 
     # + return - Fetched resource 
     remote isolated function updateEduResource(string 'resource, EduResourceUpdate payload, map<string|string[]> headers = {}) returns EduResource|error {
         string resourcePath = string `/eduResources/${getEncodedUri('resource)}`;
@@ -657,6 +664,7 @@ public isolated client class Client {
     #
     # + 'resource - Unique identifier of the resource
     # + headers - Headers to be sent with the request 
+    # + payload - Destination folder of the education resource 
     # + return - Fetched resource 
     remote isolated function moveEduResource(string 'resource, EduResourceMove payload, map<string|string[]> headers = {}) returns EduResource|error {
         string resourcePath = string `/eduResources/${getEncodedUri('resource)}/move`;
@@ -670,6 +678,7 @@ public isolated client class Client {
     #
     # + 'resource - Unique identifier of the resource
     # + headers - Headers to be sent with the request 
+    # + payload - Destination library of the education resource copy 
     # + return - Fetched resource 
     remote isolated function copyEduResource(string 'resource, EduResourceCopy payload, map<string|string[]> headers = {}) returns EduResource|error {
         string resourcePath = string `/eduResources/${getEncodedUri('resource)}/copy`;
@@ -694,6 +703,7 @@ public isolated client class Client {
     #
     # + 'resource - Unique identifier of the resource
     # + headers - Headers to be sent with the request 
+    # + payload - Class and options for using the education resource 
     # + return - Assignment copied to the chosen class 
     remote isolated function useEduResourceInClass(string 'resource, EduResourceUseInClass payload, map<string|string[]> headers = {}) returns ClassAssignment|error {
         string resourcePath = string `/eduResources/${getEncodedUri('resource)}/useInClass`;
@@ -718,6 +728,7 @@ public isolated client class Client {
     #
     # + 'resource - Unique identifier of the resource
     # + headers - Headers to be sent with the request 
+    # + payload - Assignment properties to update on the education resource 
     # + return - Fetched resource 
     remote isolated function updateEduResourceAssignment(string 'resource, AssignmentUpdate payload, map<string|string[]> headers = {}) returns Assignment|error {
         string resourcePath = string `/eduResources/${getEncodedUri('resource)}/assignment`;
@@ -741,6 +752,7 @@ public isolated client class Client {
     # Create a new group
     #
     # + headers - Headers to be sent with the request 
+    # + payload - Details of the group to create 
     # + return - The new group 
     remote isolated function createGroup(GroupCreation payload, map<string|string[]> headers = {}) returns GroupDetails|error {
         string resourcePath = string `/groups`;
@@ -764,6 +776,7 @@ public isolated client class Client {
     #
     # + group - Unique identifier of a Flat group
     # + headers - Headers to be sent with the request 
+    # + payload - The new name of the group 
     # + return - Updated group 
     remote isolated function renameGroup(string group, RenameGroupRequest payload, map<string|string[]> headers = {}) returns GroupDetails|error {
         string resourcePath = string `/groups/${getEncodedUri(group)}`;
@@ -799,6 +812,7 @@ public isolated client class Client {
     #
     # + group - Unique identifier of a Flat group
     # + headers - Headers to be sent with the request 
+    # + payload - The student to add to the group 
     # + return - Membership created 
     remote isolated function addGroupUser(string group, AddGroupUserRequest payload, map<string|string[]> headers = {}) returns AddGroupUserResponse|error {
         string resourcePath = string `/groups/${getEncodedUri(group)}/users`;
@@ -867,6 +881,7 @@ public isolated client class Client {
     # Create an OMR job
     #
     # + headers - Headers to be sent with the request 
+    # + payload - Details of the OMR job to create 
     # + return - Draft created 
     remote isolated function createOmrJob(OmrJobCreation payload, CreateOmrJobHeaders headers = {}) returns OmrJob|error {
         string resourcePath = string `/omr/jobs`;
@@ -905,6 +920,7 @@ public isolated client class Client {
     #
     # + job - Unique identifier of the OMR job
     # + headers - Headers to be sent with the request 
+    # + payload - The page image file to add to the OMR job 
     # + return - File added 
     remote isolated function addOmrJobFile(string job, OmrJobFileUpload payload, AddOmrJobFileHeaders headers = {}) returns OmrJobFileUploadResult|error {
         string resourcePath = string `/omr/jobs/${getEncodedUri(job)}/files`;
@@ -944,6 +960,7 @@ public isolated client class Client {
     # + job - Unique identifier of the OMR job
     # + step - The pending step being submitted
     # + headers - Headers to be sent with the request 
+    # + payload - The data submitted for the interactive OMR step 
     # + return - Step accepted, processing resumed 
     remote isolated function submitOmrJobStep(string job, OmrStepName step, OmrStepSubmission payload, SubmitOmrJobStepHeaders headers = {}) returns OmrJob|error {
         string resourcePath = string `/omr/jobs/${getEncodedUri(job)}/steps/${getEncodedUri(step)}`;
@@ -997,6 +1014,7 @@ public isolated client class Client {
     # Create a new user account
     #
     # + headers - Headers to be sent with the request 
+    # + payload - Details of the user account to create 
     # + return - New user created 
     remote isolated function createOrganizationUser(UserCreation payload, map<string|string[]> headers = {}) returns UserDetailsAdmin|error {
         string resourcePath = string `/organizations/users`;
@@ -1022,6 +1040,7 @@ public isolated client class Client {
     #
     # + user - Unique identifier of the Flat account
     # + headers - Headers to be sent with the request 
+    # + payload - Account properties to update 
     # + return - User updated 
     remote isolated function updateOrganizationUser(string user, UserAdminUpdate payload, map<string|string[]> headers = {}) returns UserDetailsAdmin|error {
         string resourcePath = string `/organizations/users/${getEncodedUri(user)}`;
@@ -1047,6 +1066,7 @@ public isolated client class Client {
     #
     # + user - Unique identifier of the Flat account
     # + headers - Headers to be sent with the request 
+    # + payload - Options for the sign in link 
     # + return - Sign in link 
     remote isolated function createOrganizationUserSigninLink(string user, UserSigninLinkCreation payload, map<string|string[]> headers = {}) returns UserSigninLink|error {
         string resourcePath = string `/organizations/users/${getEncodedUri(user)}/signinLink`;
@@ -1060,6 +1080,7 @@ public isolated client class Client {
     #
     # + user - Unique identifier of the Flat account
     # + headers - Headers to be sent with the request 
+    # + payload - Options for the delegated access token 
     # + return - Created API access token 
     remote isolated function createOrganizationUserAccessToken(string user, OrganizationUserAccessTokenCreation payload, map<string|string[]> headers = {}) returns ApiAccessToken|error {
         string resourcePath = string `/organizations/users/${getEncodedUri(user)}/accessToken`;
@@ -1083,6 +1104,7 @@ public isolated client class Client {
     # Create a new invitation to join the organization
     #
     # + headers - Headers to be sent with the request 
+    # + payload - Details of the invitation to create 
     # + return - New invitation created 
     remote isolated function createOrganizationInvitation(OrganizationInvitationCreation payload, map<string|string[]> headers = {}) returns OrganizationInvitation|error {
         string resourcePath = string `/organizations/invitations`;
@@ -1117,6 +1139,7 @@ public isolated client class Client {
     # Create a new pair of LTI 1.1 credentials
     #
     # + headers - Headers to be sent with the request 
+    # + payload - Details of the LTI 1.1 credentials to create 
     # + return - The LTI Credentials 
     # 
     # # Deprecated
@@ -1154,6 +1177,7 @@ public isolated client class Client {
     # Create a new LTI configuration (1.1 or 1.3)
     #
     # + headers - Headers to be sent with the request 
+    # + payload - Details of the LTI configuration to create 
     # + return - The created LTI configuration 
     remote isolated function createLtiConfiguration(LtiConfigurationCreate payload, map<string|string[]> headers = {}) returns LtiConfiguration|error {
         string resourcePath = string `/organizations/lti/configurations`;
@@ -1167,6 +1191,7 @@ public isolated client class Client {
     #
     # + configuration - Configuration unique identifier
     # + headers - Headers to be sent with the request 
+    # + payload - LTI configuration properties to update 
     # + return - The updated configuration 
     remote isolated function updateLtiConfiguration(string configuration, LtiConfigurationUpdate payload, map<string|string[]> headers = {}) returns LtiConfiguration|error {
         string resourcePath = string `/organizations/lti/configurations/${getEncodedUri(configuration)}`;
@@ -1189,6 +1214,7 @@ public isolated client class Client {
     # Create a new score
     #
     # + headers - Headers to be sent with the request 
+    # + payload - Details of the score to create or import 
     # + return - Score created 
     remote isolated function createScore(ScoreCreation payload, map<string|string[]> headers = {}) returns ScoreDetails|Task|error {
         string resourcePath = string `/scores`;
@@ -1214,6 +1240,7 @@ public isolated client class Client {
     #
     # + score - Unique identifier of the score document. This can be a Flat Score unique identifier (i.e. `ScoreDetails.id`) or, if the score is also a Google Drive file, the Drive file unique identifier prefixed with `drive-` (e.g. `drive-0B000000000`)
     # + headers - Headers to be sent with the request 
+    # + payload - Score metadata to update 
     # + return - Score details 
     remote isolated function editScore(string score, ScoreModification payload, map<string|string[]> headers = {}) returns ScoreDetails|error {
         string resourcePath = string `/scores/${getEncodedUri(score)}`;
@@ -1261,6 +1288,7 @@ public isolated client class Client {
     # + score - Unique identifier of the score document. This can be a Flat Score unique identifier (i.e. `ScoreDetails.id`) or, if the score is also a Google Drive file, the Drive file unique identifier prefixed with `drive-` (e.g. `drive-0B000000000`)
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
+    # + payload - Options for forking the score 
     # + return - Score details 
     remote isolated function forkScore(string score, ScoreFork payload, map<string|string[]> headers = {}, *ForkScoreQueries queries) returns ScoreDetails|error {
         string resourcePath = string `/scores/${getEncodedUri(score)}/fork`;
@@ -1287,6 +1315,7 @@ public isolated client class Client {
     #
     # + score - Unique identifier of the score document. This can be a Flat Score unique identifier (i.e. `ScoreDetails.id`) or, if the score is also a Google Drive file, the Drive file unique identifier prefixed with `drive-` (e.g. `drive-0B000000000`)
     # + headers - Headers to be sent with the request 
+    # + payload - The user, group or email to share the score with 
     # + return - The newly added collaborator metadata 
     remote isolated function addScoreCollaborator(string score, ResourceCollaboratorCreation payload, map<string|string[]> headers = {}) returns ResourceCollaborator|error {
         string resourcePath = string `/scores/${getEncodedUri(score)}/collaborators`;
@@ -1316,13 +1345,10 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - The collaborator has been removed 
-    remote isolated function removeScoreCollaborator(string score, string collaborator, record {} payload, map<string|string[]> headers = {}, *RemoveScoreCollaboratorQueries queries) returns error? {
+    remote isolated function removeScoreCollaborator(string score, string collaborator, map<string|string[]> headers = {}, *RemoveScoreCollaboratorQueries queries) returns error? {
         string resourcePath = string `/scores/${getEncodedUri(score)}/collaborators/${getEncodedUri(collaborator)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
-        http:Request request = new;
-        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(payload).ensureType());
-        request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
-        return self.clientEp->delete(resourcePath, request, headers);
+        return self.clientEp->delete(resourcePath, headers = headers);
     }
 
     # List the audio or video tracks linked to a score
@@ -1341,6 +1367,7 @@ public isolated client class Client {
     #
     # + score - Unique identifier of the score document. This can be a Flat Score unique identifier (i.e. `ScoreDetails.id`) or, if the score is also a Google Drive file, the Drive file unique identifier prefixed with `drive-` (e.g. `drive-0B000000000`)
     # + headers - Headers to be sent with the request 
+    # + payload - Details of the track to add to the score 
     # + return - Created track 
     remote isolated function addScoreTrack(string score, ScoreTrackCreation payload, map<string|string[]> headers = {}) returns ScoreTrackCreationResponse|error {
         string resourcePath = string `/scores/${getEncodedUri(score)}/tracks`;
@@ -1368,6 +1395,7 @@ public isolated client class Client {
     # + score - Unique identifier of the score document. This can be a Flat Score unique identifier (i.e. `ScoreDetails.id`) or, if the score is also a Google Drive file, the Drive file unique identifier prefixed with `drive-` (e.g. `drive-0B000000000`)
     # + track - Unique identifier of a score audio track
     # + headers - Headers to be sent with the request 
+    # + payload - Track properties to update 
     # + return - Updated track 
     remote isolated function updateScoreTrack(string score, string track, ScoreTrackUpdate payload, map<string|string[]> headers = {}) returns ScoreTrack|error {
         string resourcePath = string `/scores/${getEncodedUri(score)}/tracks/${getEncodedUri(track)}`;
@@ -1405,6 +1433,7 @@ public isolated client class Client {
     # + score - Unique identifier of the score document. This can be a Flat Score unique identifier (i.e. `ScoreDetails.id`) or, if the score is also a Google Drive file, the Drive file unique identifier prefixed with `drive-` (e.g. `drive-0B000000000`)
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
+    # + payload - The comment to post on the score 
     # + return - The new comment 
     remote isolated function addScoreComment(string score, ScoreCommentCreation payload, map<string|string[]> headers = {}, *AddScoreCommentQueries queries) returns ScoreComment|error {
         string resourcePath = string `/scores/${getEncodedUri(score)}/comments`;
@@ -1421,6 +1450,7 @@ public isolated client class Client {
     # + comment - Unique identifier of a sheet music comment
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
+    # + payload - The updated comment 
     # + return - The edited comment 
     remote isolated function updateScoreComment(string score, string comment, ScoreCommentUpdate payload, map<string|string[]> headers = {}, *UpdateScoreCommentQueries queries) returns ScoreComment|error {
         string resourcePath = string `/scores/${getEncodedUri(score)}/comments/${getEncodedUri(comment)}`;
@@ -1438,13 +1468,10 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - The comment has been deleted 
-    remote isolated function deleteScoreComment(string score, string comment, record {} payload, map<string|string[]> headers = {}, *DeleteScoreCommentQueries queries) returns error? {
+    remote isolated function deleteScoreComment(string score, string comment, map<string|string[]> headers = {}, *DeleteScoreCommentQueries queries) returns error? {
         string resourcePath = string `/scores/${getEncodedUri(score)}/comments/${getEncodedUri(comment)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
-        http:Request request = new;
-        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(payload).ensureType());
-        request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
-        return self.clientEp->delete(resourcePath, request, headers);
+        return self.clientEp->delete(resourcePath, headers = headers);
     }
 
     # Mark the comment as resolved
@@ -1490,6 +1517,7 @@ public isolated client class Client {
     #
     # + score - Unique identifier of the score document. This can be a Flat Score unique identifier (i.e. `ScoreDetails.id`) or, if the score is also a Google Drive file, the Drive file unique identifier prefixed with `drive-` (e.g. `drive-0B000000000`)
     # + headers - Headers to be sent with the request 
+    # + payload - Details of the revision to create 
     # + return - The new created revision metadata 
     remote isolated function createScoreRevision(string score, ScoreRevisionCreation payload, map<string|string[]> headers = {}) returns ScoreRevision|error {
         string resourcePath = string `/scores/${getEncodedUri(score)}/revisions`;
@@ -1533,6 +1561,7 @@ public isolated client class Client {
     # + format - The format of the file that will be generated or the target service name where the file will be exported
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
+    # + payload - Options of the export task 
     # + return - Task associated to the generation of the file 
     remote isolated function createExportTask(string score, string revision, "mp3"|"wav"|"practicefirst" format, TaskExportOptions payload, map<string|string[]> headers = {}, *CreateExportTaskQueries queries) returns Task|error {
         string resourcePath = string `/scores/${getEncodedUri(score)}/revisions/${getEncodedUri(revision)}/${getEncodedUri(format)}/task`;

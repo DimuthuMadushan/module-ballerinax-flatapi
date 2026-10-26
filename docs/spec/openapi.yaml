@@ -169,6 +169,7 @@ paths:
             schema:
               $ref: '#/components/schemas/ClassCreation'
         required: true
+        description: Details of the class to create
       responses:
         '200':
           description: The new class details
@@ -458,6 +459,7 @@ paths:
             schema:
               $ref: '#/components/schemas/ClassAssignmentUpdate'
         required: true
+        description: Details of the assignment to create
       responses:
         '200':
           description: The assignment has been created
@@ -532,6 +534,7 @@ paths:
             schema:
               $ref: '#/components/schemas/ClassAssignmentUpdate'
         required: true
+        description: Assignment properties to update
       responses:
         '200':
           description: The assignment has been updated
@@ -601,6 +604,7 @@ paths:
             schema:
               $ref: '#/components/schemas/AssignmentCopy'
         required: true
+        description: Destination of the assignment copy
       responses:
         '200':
           description: The new created assignment
@@ -716,6 +720,7 @@ paths:
             schema:
               $ref: '#/components/schemas/AssignmentSubmissionUpdate'
         required: true
+        description: Submission content to create, edit or submit
       responses:
         '200':
           description: The submission
@@ -837,6 +842,7 @@ paths:
             schema:
               $ref: '#/components/schemas/AssignmentSubmissionUpdate'
         required: true
+        description: Submission properties to update
       responses:
         '200':
           description: The submission
@@ -978,6 +984,7 @@ paths:
             schema:
               $ref: '#/components/schemas/AssignmentSubmissionCommentCreation'
         required: true
+        description: The feedback comment to add
       responses:
         '200':
           description: The comment
@@ -1023,6 +1030,7 @@ paths:
             schema:
               $ref: '#/components/schemas/AssignmentSubmissionCommentCreation'
         required: true
+        description: The updated feedback comment
       responses:
         '200':
           description: The comment
@@ -1235,6 +1243,7 @@ paths:
             schema:
               $ref: '#/components/schemas/CollectionCreation'
         required: true
+        description: Details of the collection to create
       responses:
         '200':
           description: Collection created
@@ -1329,6 +1338,7 @@ paths:
             schema:
               $ref: '#/components/schemas/CollectionModification'
         required: true
+        description: Collection metadata to update
       responses:
         '200':
           description: Collection details
@@ -1579,11 +1589,6 @@ paths:
       - OAuth2:
         - collections
         - collections.add_scores
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
     delete:
       tags:
       - Collection
@@ -1616,11 +1621,6 @@ paths:
       security:
       - OAuth2:
         - collections
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
       parameters:
       - $ref: '#/components/parameters/eventProperties'
   /eduResources:
@@ -1747,6 +1747,7 @@ paths:
             schema:
               $ref: '#/components/schemas/EduResourceCreation'
         required: true
+        description: Details of the education resource to create
       responses:
         '200':
           description: Fetched resource
@@ -1840,6 +1841,7 @@ paths:
             schema:
               $ref: '#/components/schemas/EduResourceUpdate'
         required: true
+        description: Education resource metadata to update
       responses:
         '200':
           description: Fetched resource
@@ -1894,6 +1896,7 @@ paths:
             schema:
               $ref: '#/components/schemas/EduResourceMove'
         required: true
+        description: Destination folder of the education resource
       responses:
         '200':
           description: Fetched resource
@@ -1930,6 +1933,7 @@ paths:
             schema:
               $ref: '#/components/schemas/EduResourceCopy'
         required: true
+        description: Destination library of the education resource copy
       responses:
         '200':
           description: Fetched resource
@@ -2006,6 +2010,7 @@ paths:
             schema:
               $ref: '#/components/schemas/EduResourceUseInClass'
         required: true
+        description: Class and options for using the education resource
       responses:
         '200':
           description: Assignment copied to the chosen class
@@ -2075,6 +2080,7 @@ paths:
             schema:
               $ref: '#/components/schemas/AssignmentUpdate'
         required: true
+        description: Assignment properties to update on the education resource
       responses:
         '200':
           description: Fetched resource
@@ -2178,6 +2184,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/GroupCreation'
+        description: Details of the group to create
       responses:
         '200':
           description: The new group
@@ -2261,6 +2268,7 @@ paths:
                   description: New name for the group
               required:
               - name
+        description: The new name of the group
       responses:
         '200':
           description: Updated group
@@ -2405,6 +2413,7 @@ paths:
                   description: ID of the student to add
               required:
               - user
+        description: The student to add to the group
       responses:
         '200':
           description: Membership created
@@ -2648,6 +2657,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/OmrJobCreation'
+        description: Details of the OMR job to create
       responses:
         '201':
           description: Draft created
@@ -2855,6 +2865,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/OmrJobFileUpload'
+        description: The page image file to add to the OMR job
       responses:
         '200':
           description: File added
@@ -3006,6 +3017,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/OmrStepSubmission'
+        description: The data submitted for the interactive OMR step
       responses:
         '202':
           description: Step accepted, processing resumed
@@ -3216,6 +3228,7 @@ paths:
             schema:
               $ref: '#/components/schemas/UserCreation'
         required: true
+        description: Details of the user account to create
       responses:
         '200':
           description: New user created
@@ -3284,6 +3297,7 @@ paths:
             schema:
               $ref: '#/components/schemas/UserAdminUpdate'
         required: true
+        description: Account properties to update
       responses:
         '200':
           description: User updated
@@ -3353,6 +3367,7 @@ paths:
             schema:
               $ref: '#/components/schemas/UserSigninLinkCreation'
         required: true
+        description: Options for the sign in link
       responses:
         '200':
           description: Sign in link
@@ -3393,6 +3408,7 @@ paths:
             schema:
               $ref: '#/components/schemas/OrganizationUserAccessTokenCreation'
         required: true
+        description: Options for the delegated access token
       responses:
         '200':
           description: Created API access token
@@ -3485,6 +3501,7 @@ paths:
             schema:
               $ref: '#/components/schemas/OrganizationInvitationCreation'
         required: true
+        description: Details of the invitation to create
       responses:
         '200':
           description: New invitation created
@@ -3582,6 +3599,7 @@ paths:
             schema:
               $ref: '#/components/schemas/LtiCredentialsCreation'
         required: true
+        description: Details of the LTI 1.1 credentials to create
       responses:
         '200':
           description: The LTI Credentials
@@ -3687,6 +3705,7 @@ paths:
             schema:
               $ref: '#/components/schemas/LtiConfigurationCreate'
         required: true
+        description: Details of the LTI configuration to create
       responses:
         '200':
           description: The created LTI configuration
@@ -3723,6 +3742,7 @@ paths:
             schema:
               $ref: '#/components/schemas/LtiConfigurationUpdate'
         required: true
+        description: LTI configuration properties to update
       responses:
         '200':
           description: The updated configuration
@@ -3818,6 +3838,7 @@ paths:
             schema:
               $ref: '#/components/schemas/ScoreCreation'
         required: true
+        description: Details of the score to create or import
       responses:
         '200':
           description: Score created
@@ -4005,6 +4026,7 @@ paths:
             schema:
               $ref: '#/components/schemas/ScoreModification'
         required: true
+        description: Score metadata to update
       responses:
         '200':
           description: Score details
@@ -4189,6 +4211,7 @@ paths:
             schema:
               $ref: '#/components/schemas/ScoreFork'
         required: true
+        description: Options for forking the score
       responses:
         '200':
           description: Score details
@@ -4303,6 +4326,7 @@ paths:
             schema:
               $ref: '#/components/schemas/ResourceCollaboratorCreation'
         required: true
+        description: The user, group or email to share the score with
       responses:
         '200':
           description: The newly added collaborator metadata
@@ -4433,11 +4457,6 @@ paths:
       security:
       - OAuth2:
         - scores
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
       parameters:
       - $ref: '#/components/parameters/eventProperties'
   /scores/{score}/tracks:
@@ -4530,6 +4549,7 @@ paths:
             schema:
               $ref: '#/components/schemas/ScoreTrackCreation'
         required: true
+        description: Details of the track to add to the score
       responses:
         '200':
           description: Created track
@@ -4628,6 +4648,7 @@ paths:
             schema:
               $ref: '#/components/schemas/ScoreTrackUpdate'
         required: true
+        description: Track properties to update
       responses:
         '200':
           description: Updated track
@@ -4784,6 +4805,7 @@ paths:
             schema:
               $ref: '#/components/schemas/ScoreCommentCreation'
         required: true
+        description: The comment to post on the score
       responses:
         '200':
           description: The new comment
@@ -4853,6 +4875,7 @@ paths:
             schema:
               $ref: '#/components/schemas/ScoreCommentUpdate'
         required: true
+        description: The updated comment
       responses:
         '200':
           description: The edited comment
@@ -4919,11 +4942,6 @@ paths:
       - OAuth2:
         - scores.social
         - scores
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
       parameters:
       - $ref: '#/components/parameters/eventProperties'
   /scores/{score}/comments/{comment}/resolved:
@@ -5084,6 +5102,7 @@ paths:
             schema:
               $ref: '#/components/schemas/ScoreRevisionCreation'
         required: true
+        description: Details of the revision to create
       responses:
         '200':
           description: The new created revision metadata
@@ -5342,6 +5361,7 @@ paths:
             schema:
               $ref: '#/components/schemas/TaskExportOptions'
         required: false
+        description: Options of the export task
       responses:
         '200':
           description: Task associated to the generation of the file

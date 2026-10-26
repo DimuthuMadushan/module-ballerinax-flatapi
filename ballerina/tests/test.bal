@@ -24,6 +24,11 @@ final string serviceUrl = isLiveServer ? "https://api.flat.io/v2" : "http://loca
 final string token = isLiveServer ? os:getEnv("FLAT_ACCESS_TOKEN") : "test_token";
 final string testScoreId = isLiveServer ? os:getEnv("FLAT_SCORE_ID") : "a1b2c3d4e5f60718293a4b01";
 final string testUserId = isLiveServer ? os:getEnv("FLAT_USER_ID") : "5a1b2c3d4e5f60718293a4b5";
+final string testCollectionId = isLiveServer ? os:getEnv("FLAT_COLLECTION_ID") : "8e1f2a3b4c5d60718293a4e1";
+final string testClassId = isLiveServer ? os:getEnv("FLAT_CLASS_ID") : "6c1d2e3f4a5b60718293a4c1";
+final string testAssignmentId = isLiveServer ? os:getEnv("FLAT_ASSIGNMENT_ID") : "7d1e2f3a4b5c60718293a4d1";
+final string testGroupId = isLiveServer ? os:getEnv("FLAT_GROUP_ID") : "9f1a2b3c4d5e60718293a4f1";
+final string testTaskId = isLiveServer ? os:getEnv("FLAT_TASK_ID") : "d4e5f60718293a4b5c6d7e01";
 
 final Client flat = check new ({auth: {token}, httpVersion: http:HTTP_1_1}, serviceUrl);
 
@@ -105,7 +110,7 @@ isolated function testCreateCollection() returns error? {
 
 @test:Config {groups: ["live_tests", "mock_tests"]}
 isolated function testGetCollection() returns error? {
-    Collection response = check flat->getCollection("8e1f2a3b4c5d60718293a4e1");
+    Collection response = check flat->getCollection(testCollectionId);
     test:assertTrue(response.title.length() > 0);
 }
 
@@ -129,25 +134,25 @@ isolated function testCreateClass() returns error? {
 
 @test:Config {groups: ["live_tests", "mock_tests"]}
 isolated function testGetClass() returns error? {
-    ClassDetails response = check flat->getClass("6c1d2e3f4a5b60718293a4c1");
+    ClassDetails response = check flat->getClass(testClassId);
     test:assertTrue(response.name.length() > 0);
 }
 
 @test:Config {groups: ["live_tests", "mock_tests"]}
 isolated function testUpdateClass() returns error? {
-    ClassDetails response = check flat->updateClass("6c1d2e3f4a5b60718293a4c1", {name: "Advanced Music Theory"});
+    ClassDetails response = check flat->updateClass(testClassId, {name: "Advanced Music Theory"});
     test:assertTrue(response.id.length() > 0);
 }
 
 @test:Config {groups: ["live_tests", "mock_tests"]}
 isolated function testListAssignments() returns error? {
-    ClassAssignment[] response = check flat->listAssignments("6c1d2e3f4a5b60718293a4c1");
+    ClassAssignment[] response = check flat->listAssignments(testClassId);
     test:assertTrue(response.length() > 0);
 }
 
 @test:Config {groups: ["live_tests", "mock_tests"]}
 isolated function testGetAssignment() returns error? {
-    Assignment response = check flat->getAssignment("6c1d2e3f4a5b60718293a4c1", "7d1e2f3a4b5c60718293a4d1");
+    Assignment response = check flat->getAssignment(testClassId, testAssignmentId);
     test:assertTrue(response.title.length() > 0);
 }
 
@@ -159,13 +164,13 @@ isolated function testListGroups() returns error? {
 
 @test:Config {groups: ["live_tests", "mock_tests"]}
 isolated function testCreateGroup() returns error? {
-    GroupDetails response = check flat->createGroup({classroom: "6c1d2e3f4a5b60718293a4c1", name: "Section C", 'type: "classStudentsSubGroup"});
+    GroupDetails response = check flat->createGroup({classroom: testClassId, name: "Section C", 'type: "classStudentsSubGroup"});
     test:assertTrue(response.id.length() > 0);
 }
 
 @test:Config {groups: ["live_tests", "mock_tests"]}
 isolated function testGetGroupDetails() returns error? {
-    GroupDetails response = check flat->getGroupDetails("9f1a2b3c4d5e60718293a4f1");
+    GroupDetails response = check flat->getGroupDetails(testGroupId);
     test:assertTrue(response.name.length() > 0);
 }
 
@@ -177,6 +182,6 @@ isolated function testListOrganizationUsers() returns error? {
 
 @test:Config {groups: ["live_tests", "mock_tests"]}
 isolated function testGetTask() returns error? {
-    Task response = check flat->getTask("d4e5f60718293a4b5c6d7e01");
+    Task response = check flat->getTask(testTaskId);
     test:assertEquals(response.state, "done");
 }

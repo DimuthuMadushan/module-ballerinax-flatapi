@@ -200,6 +200,7 @@
                 "description": "Classrooms on Flat allow you to create activities with assignments and post content to a specific group.\n\nWhen creating a class, Flat automatically creates two groups: one for the teachers of the course, one for the students. The creator of this class is automatically added to the teachers group.\n\nIf the classroom is synchronized with another application like Google Classroom, some of the meta information will automatically be updated.\n\nYou can add users to this class using `PUT /classes/{class}/users/{user}`, they will automatically be added to the group based on their role on Flat. Users can also enroll themselves to this class using `POST /classes/enroll/{enrollmentCode}` and the `enrollmentCode` returned in the `ClassDetails` response.\n",
                 "operationId": "createClass",
                 "requestBody": {
+                    "description": "Details of the class to create",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -660,6 +661,7 @@
                 "description": "Use this method as a teacher to create and post a new assignment to a class.\n\nIf the class is synchronized with Google Classroom, the assignment will be automatically posted to your Classroom course.\n",
                 "operationId": "createClassAssignment",
                 "requestBody": {
+                    "description": "Details of the assignment to create",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -757,6 +759,7 @@
                 "description": "Update an assignment. Only the properties present in the request body are modified, so a\npartial body leaves everything else as it was. `attachments` is the exception: when present\nit replaces the whole list.\n\nRequires the teacher role on the class. The class must not be archived, and an assignment\nthat is already `active` cannot be moved back to `draft`.\n\nEditing an assignment that students have already started does not reset their submissions.\nTo take an assignment out of circulation while keeping the work, use `archiveAssignment`.\n",
                 "operationId": "updateClassAssignment",
                 "requestBody": {
+                    "description": "Assignment properties to update",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -847,6 +850,7 @@
                 "description": "Copy an assignment to a specified class or the resource library\n\nFor class assignments:\n- If the original assignment has a due date in the past, this new assignment will be created without a due date.\n- If the class is synchronized with an external app (e.g. Google Classroom), the copied assignment will also be posted on the external app.\n",
                 "operationId": "copyAssignment",
                 "requestBody": {
+                    "description": "Destination of the assignment copy",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -1034,6 +1038,7 @@
                 "description": "Use this method as a student to create, update and submit a submission related to an assignment.\nStudents can only set `attachments`, `playback`, `exercisesIds` and `submit`.\nTeachers can use `PUT /classes/{class}/assignments/{assignment}/submissions/{submission}` to update a submission by id.\n",
                 "operationId": "createSubmission",
                 "requestBody": {
+                    "description": "Submission content to create, edit or submit",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -1234,6 +1239,7 @@
                 "description": "Use this method as a teacher to update a submission and give feedback.\nTeachers can only set `return`, `draftGrade` and `grade`.\n",
                 "operationId": "editSubmission",
                 "requestBody": {
+                    "description": "Submission properties to update",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -1468,6 +1474,7 @@
                 "summary": "Add a feedback comment to a submission",
                 "operationId": "addSubmissionComment",
                 "requestBody": {
+                    "description": "The feedback comment to add",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -1547,6 +1554,7 @@
                 "summary": "Update a feedback comment to a submission",
                 "operationId": "updateSubmissionComment",
                 "requestBody": {
+                    "description": "The updated feedback comment",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -1891,6 +1899,7 @@
                 "description": "This method will create a new collection in your account.\n",
                 "operationId": "createCollection",
                 "requestBody": {
+                    "description": "Details of the collection to create",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -2020,6 +2029,7 @@
                 "summary": "Update a collection's metadata",
                 "operationId": "editCollection",
                 "requestBody": {
+                    "description": "Collection metadata to update",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -2341,15 +2351,6 @@
                 "summary": "Add a score to the collection",
                 "description": "This operation will add a score to a collection. The default behavior will make the score available across multiple collections.\nYou must have the capability `canAddScores` on the provided `collection` to perform the action.\n",
                 "operationId": "addScoreToCollection",
-                "requestBody": {
-                    "content": {
-                        "application/x-www-form-urlencoded": {
-                            "schema": {
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
                 "responses": {
                     "200": {
                         "description": "Score details",
@@ -2413,15 +2414,6 @@
                         "$ref": "#/components/parameters/eventProperties"
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/x-www-form-urlencoded": {
-                            "schema": {
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
                 "responses": {
                     "204": {
                         "description": "Score removed from the collection"
@@ -2691,6 +2683,7 @@
                 "summary": "Create a new education resource",
                 "operationId": "createEduResource",
                 "requestBody": {
+                    "description": "Details of the education resource to create",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -2826,6 +2819,7 @@
                 "description": "Update the metadata of a resource (e.g. its title).\n\nUse this method to rename education resources folders or assignments.\n",
                 "operationId": "updateEduResource",
                 "requestBody": {
+                    "description": "Education resource metadata to update",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -2918,6 +2912,7 @@
                 "summary": "Move an education resource",
                 "operationId": "moveEduResource",
                 "requestBody": {
+                    "description": "Destination folder of the education resource",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -2980,6 +2975,7 @@
                 "summary": "Copy an education resource to a Resource Library",
                 "operationId": "copyEduResource",
                 "requestBody": {
+                    "description": "Destination library of the education resource copy",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -3096,6 +3092,7 @@
                 "description": "This endpoint will copy a resource and the underlying resources.\nThe assignment will be created as a draft that can be completed with other options before publishing (e.g. due date, publication date for scheduling, etc.).\n",
                 "operationId": "useEduResourceInClass",
                 "requestBody": {
+                    "description": "Class and options for using the education resource",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -3211,6 +3208,7 @@
                 "summary": "Update an education resource assignment",
                 "operationId": "updateEduResourceAssignment",
                 "requestBody": {
+                    "description": "Assignment properties to update on the education resource",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -3387,6 +3385,7 @@
                 "description": "Create a group of the given type, tied to a classroom, optionally with initial members.\n",
                 "operationId": "createGroup",
                 "requestBody": {
+                    "description": "Details of the group to create",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -3518,6 +3517,7 @@
                 "description": "Rename a sub-group. Only available for class student groups.",
                 "operationId": "renameGroup",
                 "requestBody": {
+                    "description": "The new name of the group",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -3737,6 +3737,7 @@
                 "description": "Add a student to the specified group (must be in the same class)",
                 "operationId": "addGroupUser",
                 "requestBody": {
+                    "description": "The student to add to the group",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -4164,6 +4165,7 @@
                     }
                 ],
                 "requestBody": {
+                    "description": "Details of the OMR job to create",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -4390,6 +4392,7 @@
                     }
                 ],
                 "requestBody": {
+                    "description": "The page image file to add to the OMR job",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -4633,6 +4636,7 @@
                     }
                 ],
                 "requestBody": {
+                    "description": "The data submitted for the interactive OMR step",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -5002,6 +5006,7 @@
                 "summary": "Create a new user account",
                 "operationId": "createOrganizationUser",
                 "requestBody": {
+                    "description": "Details of the user account to create",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -5109,6 +5114,7 @@
                 "summary": "Update account information",
                 "operationId": "updateOrganizationUser",
                 "requestBody": {
+                    "description": "Account properties to update",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -5216,6 +5222,7 @@
                 "summary": "Create a sign in link for an organization user",
                 "operationId": "createOrganizationUserSigninLink",
                 "requestBody": {
+                    "description": "Options for the sign in link",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -5279,6 +5286,7 @@
                 "description": "This operation will create an API access token for a chosen organization user.\nThis token will be valid for a limited time and can be used to access the API as the organization user.\n",
                 "operationId": "createOrganizationUserAccessToken",
                 "requestBody": {
+                    "description": "Options for the delegated access token",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -5437,6 +5445,7 @@
                 "description": "This method creates and sends an invitation for teachers and admins.\n\nInvitations can only be used by new Flat users or users who are not part of the organization yet.\n\nIf the email of the user is already associated to a user of your organization, the API will simply update the role of the existing user and won't send an invitation. In this case, the property `usedBy` will be directly filled with the unique identifier of the corresponding user.\n",
                 "operationId": "createOrganizationInvitation",
                 "requestBody": {
+                    "description": "Details of the invitation to create",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -5586,6 +5595,7 @@
                 "description": "DEPRECATED. Use the unified endpoints under `/organizations/lti/configurations`.\nNote: Teachers may be restricted by the organization privacy setting `lti1p1AllowTeachersCredentials`.\n\nFlat for Education is a Certified LTI Provider. You can use these API methods to automate the creation of LTI credentials. You can read more about our LTI implementation, supported components and LTI Endpoints in our [Developer Documentation](https://flat.io/developers/docs/lti/).\n",
                 "operationId": "createLtiCredentials",
                 "requestBody": {
+                    "description": "Details of the LTI 1.1 credentials to create",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -5756,6 +5766,7 @@
                 "summary": "Create a new LTI configuration (1.1 or 1.3)",
                 "operationId": "createLtiConfiguration",
                 "requestBody": {
+                    "description": "Details of the LTI configuration to create",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -5805,6 +5816,7 @@
                 "summary": "Update an existing LTI configuration (edit 1.3; 1.1 not editable)",
                 "operationId": "updateLtiConfiguration",
                 "requestBody": {
+                    "description": "LTI configuration properties to update",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -5898,6 +5910,7 @@
                 "description": "Use this API method to **create a new music score in the current User account**. This endpoint provides 3 ways to create scores:\n\n* `ScoreCreationBuilderData` : Create a blank score by providing the list of instruments to use. You can optionally customize the initial key signature, time signature, enable TABs, Chord grids, as well as the page layout.\n* `ScoreCreationFileImport`: Import a file to create the new Flat document.\n\n  **Preferred formats**:\n  * **MusicXML**: `.xml`, `.musicxml`, `.mxl` (compressed) \u2014 MIME: `vnd.recordare.musicxml+xml`, `vnd.recordare.musicxml`. This is the only format that preserves all notation data (articulations, dynamics, layout, etc.) with full round-trip support.\n  * **MIDI**: `.mid`, `.midi` \u2014 MIME: `audio/midi`. Only preserves pitch, timing, and instrument data; notation details are lost.\n\n  **Also supported** (converted to MusicXML on import, some notation details may be lost):\n  * **Guitar Pro**: `.gp`, `.gp3`, `.gp4`, `.gp5`, `.gpx`, `.gtp`\n  * **MuseScore**: `.mscz`, `.mscx`\n  * **Finale**: `.musx`\n  * **ABC notation**: `.abc` \u2014 MIME: `text/vnd.abc`\n  * **PowerTab**: `.ptb`\n  * **Capella**: `.cap`, `.capx`\n  * **MEI**: `.mei`\n  * **Overture**: `.ove`\n  * **TablEdit**: `.tef`\n  * **Band-in-a-Box**: `.mgu`, `.sgu`\n  * **Karaoke MIDI**: `.kar`\n  * **MuseData**: `.md`\n  * **Score Writer**: `.scw`\n  * **Bagpipe Music Writer**: `.bmw`, `.bww`\n  * **Encore**: `.enc`\n\n  **Scanned music** (requires `supportsTasks`, runs our music recognition and spends\n  credits):\n  * **PDF**: `.pdf`\n  * **Images**: `.jpg`, `.png`, `.webp`, `.tiff`, `.gif`, `.avif`, `.heic`, `.heif`\n\n  The file is identified by its own content, so its extension and any declared type do\n  not have to match. **One file per request**: a multi-page PDF or a multi-frame TIFF is\n  fine, but several separate images of the same score (a page photographed at a time)\n  need `createOmrJob`, which takes many inputs in one job and bills them as a single\n  document. Its live limits are served by `getOmrCapabilities`.\n* `ScoreCreationGoogleDriveImport`: Import an existing Google Drive file from the connected Google Drive account.\n\nThis API call will automatically create the first revision of the document, the score can then be modified using our web application or by uploading a new revision of this file (`POST /v2/scores/{score}/revisions`).\n\nThe currently authenticated user will be the owner of the file and will be able to add other collaborators (users and groups).\n\nIf no `collection` is specified, the API will create the score in the most appropriate collection. When using an OAuth2 access token or a personal token, the score will be automatically added to your dedicated app collection in the account (`/v2/collections/app`).\n\nIf a `collection` is specified and this one has more public privacy settings than the score (e.g. `public` vs `private` for the score), the privacy settings of the created score will be adjusted to the collection ones.\n\nYou can check the adjusted privacy settings in the returned score `privacy`, and optionally adjust these settings if needed using `PUT /scores/{score}`.\n",
                 "operationId": "createScore",
                 "requestBody": {
+                    "description": "Details of the score to create or import",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -6081,6 +6094,7 @@
                 "description": "This API method allows you to change the metadata of a score document (e.g. its `title` or `privacy`), all the properties are optional.\n\nTo edit the file itself, create a new revision using the appropriate method (`POST /v2/scores/{score}/revisions`).\n\nWhen editing the `title`, `subtitle`, `composer`, `lyricist`, `arranger` or `licenseText`, the metadata is updated immediately, and a real-time action is pushed to update the document lazily.\nThis pending document modification is automatically saved as a new revision, either by a connected client or by Flat.\n",
                 "operationId": "editScore",
                 "requestBody": {
+                    "description": "Score metadata to update",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -6373,6 +6387,7 @@
                     }
                 ],
                 "requestBody": {
+                    "description": "Options for forking the score",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -6550,6 +6565,7 @@
                 "description": "Share a score with a single user or a group. This API call allows you to add, invite and update the collaborators of a resource.\n- To add an existing Flat user to the resource, specify their unique identifier in the `user` property.\n- To invite an external user to the resource, specify their email in the `userEmail` property.\n- To add a Flat group to the resource, specify its unique identifier in the `group` property.\n- To update an existing collaborator, process the same request with different rights.\n",
                 "operationId": "addScoreCollaborator",
                 "requestBody": {
+                    "description": "The user, group or email to share the score with",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -6727,15 +6743,6 @@
                         "$ref": "#/components/parameters/eventProperties"
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/x-www-form-urlencoded": {
-                            "schema": {
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
                 "responses": {
                     "204": {
                         "description": "The collaborator has been removed"
@@ -6910,6 +6917,7 @@
                 "operationId": "addScoreTrack",
                 "parameters": [],
                 "requestBody": {
+                    "description": "Details of the track to add to the score",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -7063,6 +7071,7 @@
                 "operationId": "updateScoreTrack",
                 "parameters": [],
                 "requestBody": {
+                    "description": "Track properties to update",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -7324,6 +7333,7 @@
                 "description": "Post a document or a contextualized comment on a document.\n\nPlease note that this method includes an anti-spam system for public scores. We don't guarantee that your comments will be accepted and displayed to end users. Comments can be blocked by returning a `403` HTTP error and hidden from other users when the `spam` property is `true`.\n",
                 "operationId": "addScoreComment",
                 "requestBody": {
+                    "description": "The comment to post on the score",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -7428,6 +7438,7 @@
                 "summary": "Update an existing comment",
                 "operationId": "updateScoreComment",
                 "requestBody": {
+                    "description": "The updated comment",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -7510,15 +7521,6 @@
                         "$ref": "#/components/parameters/eventProperties"
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/x-www-form-urlencoded": {
-                            "schema": {
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
                 "responses": {
                     "204": {
                         "description": "The comment has been deleted"
@@ -7830,6 +7832,7 @@
                 "operationId": "createScoreRevision",
                 "parameters": [],
                 "requestBody": {
+                    "description": "Details of the revision to create",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -8251,6 +8254,7 @@
                     }
                 ],
                 "requestBody": {
+                    "description": "Options of the export task",
                     "content": {
                         "application/json": {
                             "schema": {

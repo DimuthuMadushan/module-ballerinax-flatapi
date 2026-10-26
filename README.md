@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/ballerina-platform/module-ballerinax-flatapi/actions/workflows/ci.yml/badge.svg)](https://github.com/ballerina-platform/module-ballerinax-flatapi/actions/workflows/ci.yml)
 [![GitHub Last Commit](https://img.shields.io/github/last-commit/ballerina-platform/module-ballerinax-flatapi.svg)](https://github.com/ballerina-platform/module-ballerinax-flatapi/commits/main)
-[![GitHub Issues](https://img.shields.io/github/issues/ballerina-platform/ballerina-library/module/flatapi.svg?label=Open%20Issues)](https://github.com/ballerina-platform/ballerina-library/labels/module%2Fflatapi)
+[![GitHub Issues](https://img.shields.io/github/issues/ballerina-platform/ballerina-library/module%2Fflatapi.svg?label=Open%20Issues)](https://github.com/ballerina-platform/ballerina-library/labels/module%2Fflatapi)
 
 ## Overview
 
@@ -18,7 +18,7 @@ To use the Flat connector you need an access token for the Flat API.
 
 2. Create a new app, or open an existing one, to obtain a client ID and client secret for OAuth 2.0. To try the connector quickly, generate a personal access token from the same page instead.
 
-3. Request only the scopes your integration needs, for example `scores.readonly` to read scores or `edu.classes.readonly` to read classes.
+3. Request only the scopes your integration needs, for example `scores.readonly` to read scores, `scores.social` to post comments, `edu.classes.readonly` to read classes or `edu.classes` to manage them.
 
 4. Complete the OAuth 2.0 authorization code flow against `https://flat.io/auth/oauth` and `https://api.flat.io/oauth/access_token` to obtain an access token and a refresh token.
 
@@ -65,7 +65,7 @@ To use the Flat connector in your Ballerina application, update the `.bal` file 
 The `Flat` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/ballerina-platform/module-ballerinax-flatapi/tree/main/examples/), covering the following use cases:
 
 1. [Class assignment overview](https://github.com/ballerina-platform/module-ballerinax-flatapi/tree/main/examples/class_assignment_overview) - List the active classes of a teacher together with their assignments, and optionally create a class.
-2. [Score feedback review](https://github.com/ballerina-platform/module-ballerinax-flatapi/tree/main/examples/score_feedback_review) - Review the collaborators and comments on recent scores, and optionally post a comment.
+2. [Score feedback review](https://github.com/ballerina-platform/module-ballerinax-flatapi/tree/main/examples/score_feedback_review) - Print the collaborators and comments on recently updated scores, and optionally post a comment.
 
 ## Build from the source
 

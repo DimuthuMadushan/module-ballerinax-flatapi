@@ -3,7 +3,7 @@
 The `ballerinax/flatapi` connector provides practical examples illustrating usage in various scenarios.
 
 1. [Class assignment overview](./class_assignment_overview/class_assignment_overview.md) - List the active classes of a teacher together with their assignments, and optionally create a class.
-2. [Score feedback review](./score_feedback_review/score_feedback_review.md) - Review the collaborators and comments on recent scores, and optionally post a comment.
+2. [Score feedback review](./score_feedback_review/score_feedback_review.md) - Print the collaborators and comments on recently updated scores, and optionally post a comment.
 
 ## Prerequisites
 

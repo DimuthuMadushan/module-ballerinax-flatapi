@@ -12,6 +12,11 @@ To run them against the live Flat API, set these environment variables:
 | `FLAT_ACCESS_TOKEN` | An access token with the scopes needed by the tests |
 | `FLAT_SCORE_ID` | The ID of a score the token can read and edit |
 | `FLAT_USER_ID` | The ID of the authenticated user |
+| `FLAT_COLLECTION_ID` | The ID of a collection the token can read |
+| `FLAT_CLASS_ID` | The ID of a class the token can read and update |
+| `FLAT_ASSIGNMENT_ID` | The ID of an assignment in that class |
+| `FLAT_GROUP_ID` | The ID of a group in that class |
+| `FLAT_TASK_ID` | The ID of an existing task |
 
 ## Running the tests
 

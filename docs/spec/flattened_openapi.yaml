@@ -134,11 +134,11 @@ paths:
         explode: true
         schema:
           type: string
+          default: active
           enum:
           - active
           - inactive
           - archived
-          default: active
       responses:
         "200":
           description: The list of classes
@@ -172,6 +172,7 @@ paths:
         You can add users to this class using `PUT /classes/{class}/users/{user}`, they will automatically be added to the group based on their role on Flat. Users can also enroll themselves to this class using `POST /classes/enroll/{enrollmentCode}` and the `enrollmentCode` returned in the `ClassDetails` response.
       operationId: createClass
       requestBody:
+        description: Details of the class to create
         content:
           application/json:
             schema:
@@ -463,6 +464,7 @@ paths:
         If the class is synchronized with Google Classroom, the assignment will be automatically posted to your Classroom course.
       operationId: createClassAssignment
       requestBody:
+        description: Details of the assignment to create
         content:
           application/json:
             schema:
@@ -536,6 +538,7 @@ paths:
         To take an assignment out of circulation while keeping the work, use `archiveAssignment`.
       operationId: updateClassAssignment
       requestBody:
+        description: Assignment properties to update
         content:
           application/json:
             schema:
@@ -605,6 +608,7 @@ paths:
         - If the class is synchronized with an external app (e.g. Google Classroom), the copied assignment will also be posted on the external app.
       operationId: copyAssignment
       requestBody:
+        description: Destination of the assignment copy
         content:
           application/json:
             schema:
@@ -720,6 +724,7 @@ paths:
         Teachers can use `PUT /classes/{class}/assignments/{assignment}/submissions/{submission}` to update a submission by id.
       operationId: createSubmission
       requestBody:
+        description: "Submission content to create, edit or submit"
         content:
           application/json:
             schema:
@@ -840,6 +845,7 @@ paths:
         Teachers can only set `return`, `draftGrade` and `grade`.
       operationId: editSubmission
       requestBody:
+        description: Submission properties to update
         content:
           application/json:
             schema:
@@ -978,6 +984,7 @@ paths:
       summary: Add a feedback comment to a submission
       operationId: postSubmissionComment
       requestBody:
+        description: The feedback comment to add
         content:
           application/json:
             schema:
@@ -1022,6 +1029,7 @@ paths:
       summary: Update a feedback comment to a submission
       operationId: updateSubmissionComment
       requestBody:
+        description: The updated feedback comment
         content:
           application/json:
             schema:
@@ -1264,6 +1272,7 @@ paths:
         This method will create a new collection in your account.
       operationId: createCollection
       requestBody:
+        description: Details of the collection to create
         content:
           application/json:
             schema:
@@ -1343,6 +1352,7 @@ paths:
       summary: Update a collection's metadata
       operationId: editCollection
       requestBody:
+        description: Collection metadata to update
         content:
           application/json:
             schema:
@@ -1585,11 +1595,6 @@ paths:
         This operation will add a score to a collection. The default behavior will make the score available across multiple collections.
         You must have the capability `canAddScores` on the provided `collection` to perform the action.
       operationId: addScoreToCollection
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
       responses:
         "200":
           description: Score details
@@ -1629,11 +1634,6 @@ paths:
       operationId: deleteScoreFromCollection
       parameters:
       - $ref: "#/components/parameters/eventProperties"
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
       responses:
         "204":
           description: Score removed from the collection
@@ -1779,11 +1779,11 @@ paths:
         explode: true
         schema:
           type: string
+          default: creationDate
           enum:
           - creationDate
           - updateDate
           - title
-          default: creationDate
       - $ref: "#/components/parameters/sortDirection"
       - name: limit
         in: query
@@ -1838,6 +1838,7 @@ paths:
       summary: Create a new education resource
       operationId: createEduResource
       requestBody:
+        description: Details of the education resource to create
         content:
           application/json:
             schema:
@@ -1924,6 +1925,7 @@ paths:
         Use this method to rename education resources folders or assignments.
       operationId: updateEduResource
       requestBody:
+        description: Education resource metadata to update
         content:
           application/json:
             schema:
@@ -1980,6 +1982,7 @@ paths:
       summary: Move an education resource
       operationId: moveEduResource
       requestBody:
+        description: Destination folder of the education resource
         content:
           application/json:
             schema:
@@ -2018,6 +2021,7 @@ paths:
       summary: Copy an education resource to a Resource Library
       operationId: copyEduResource
       requestBody:
+        description: Destination library of the education resource copy
         content:
           application/json:
             schema:
@@ -2098,6 +2102,7 @@ paths:
         The assignment will be created as a draft that can be completed with other options before publishing (e.g. due date, publication date for scheduling, etc.).
       operationId: useEduResourceInClass
       requestBody:
+        description: Class and options for using the education resource
         content:
           application/json:
             schema:
@@ -2171,6 +2176,7 @@ paths:
       summary: Update an education resource assignment
       operationId: updateEduResourceAssignment
       requestBody:
+        description: Assignment properties to update on the education resource
         content:
           application/json:
             schema:
@@ -2286,6 +2292,7 @@ paths:
         Create a group of the given type, tied to a classroom, optionally with initial members.
       operationId: createGroup
       requestBody:
+        description: Details of the group to create
         content:
           application/json:
             schema:
@@ -2366,6 +2373,7 @@ paths:
       description: Rename a sub-group. Only available for class student groups.
       operationId: renameGroup
       requestBody:
+        description: The new name of the group
         content:
           application/json:
             schema:
@@ -2502,6 +2510,7 @@ paths:
       description: Add a student to the specified group (must be in the same class)
       operationId: addGroupUser
       requestBody:
+        description: The student to add to the group
         content:
           application/json:
             schema:
@@ -2816,6 +2825,7 @@ paths:
       parameters:
       - $ref: "#/components/parameters/xFlatLocale"
       requestBody:
+        description: Details of the OMR job to create
         content:
           application/json:
             schema:
@@ -2972,6 +2982,7 @@ paths:
       parameters:
       - $ref: "#/components/parameters/xFlatLocale"
       requestBody:
+        description: The page image file to add to the OMR job
         content:
           application/json:
             schema:
@@ -3126,6 +3137,7 @@ paths:
       parameters:
       - $ref: "#/components/parameters/xFlatLocale"
       requestBody:
+        description: The data submitted for the interactive OMR step
         content:
           application/json:
             schema:
@@ -3376,6 +3388,7 @@ paths:
       summary: Create a new user account
       operationId: createOrganizationUser
       requestBody:
+        description: Details of the user account to create
         content:
           application/json:
             schema:
@@ -3436,6 +3449,7 @@ paths:
       summary: Update account information
       operationId: updateOrganizationUser
       requestBody:
+        description: Account properties to update
         content:
           application/json:
             schema:
@@ -3510,6 +3524,7 @@ paths:
       summary: Create a sign in link for an organization user
       operationId: createOrganizationUserSigninLink
       requestBody:
+        description: Options for the sign in link
         content:
           application/json:
             schema:
@@ -3552,6 +3567,7 @@ paths:
         This token will be valid for a limited time and can be used to access the API as the organization user.
       operationId: createOrganizationUserAccessToken
       requestBody:
+        description: Options for the delegated access token
         content:
           application/json:
             schema:
@@ -3666,6 +3682,7 @@ paths:
         If the email of the user is already associated to a user of your organization, the API will simply update the role of the existing user and won't send an invitation. In this case, the property `usedBy` will be directly filled with the unique identifier of the corresponding user.
       operationId: createOrganizationInvitation
       requestBody:
+        description: Details of the invitation to create
         content:
           application/json:
             schema:
@@ -3764,6 +3781,7 @@ paths:
         Flat for Education is a Certified LTI Provider. You can use these API methods to automate the creation of LTI credentials. You can read more about our LTI implementation, supported components and LTI Endpoints in our [Developer Documentation](https://flat.io/developers/docs/lti/).
       operationId: createLtiCredentials
       requestBody:
+        description: Details of the LTI 1.1 credentials to create
         content:
           application/json:
             schema:
@@ -3872,6 +3890,7 @@ paths:
       summary: Create a new LTI configuration (1.1 or 1.3)
       operationId: createLtiConfiguration
       requestBody:
+        description: Details of the LTI configuration to create
         content:
           application/json:
             schema:
@@ -3901,6 +3920,7 @@ paths:
       summary: Update an existing LTI configuration (edit 1.3; 1.1 not editable)
       operationId: updateLtiConfiguration
       requestBody:
+        description: LTI configuration properties to update
         content:
           application/json:
             schema:
@@ -4005,6 +4025,7 @@ paths:
         You can check the adjusted privacy settings in the returned score `privacy`, and optionally adjust these settings if needed using `PUT /scores/{score}`.
       operationId: createScore
       requestBody:
+        description: Details of the score to create or import
         content:
           application/json:
             schema:
@@ -4188,6 +4209,7 @@ paths:
         This pending document modification is automatically saved as a new revision, either by a connected client or by Flat.
       operationId: editScore
       requestBody:
+        description: Score metadata to update
         content:
           application/json:
             schema:
@@ -4384,6 +4406,7 @@ paths:
         schema:
           type: string
       requestBody:
+        description: Options for forking the score
         content:
           application/json:
             schema:
@@ -4503,6 +4526,7 @@ paths:
         - To update an existing collaborator, process the same request with different rights.
       operationId: addScoreCollaborator
       requestBody:
+        description: "The user, group or email to share the score with"
         content:
           application/json:
             schema:
@@ -4614,11 +4638,6 @@ paths:
       operationId: removeScoreCollaborator
       parameters:
       - $ref: "#/components/parameters/eventProperties"
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
       responses:
         "204":
           description: The collaborator has been removed
@@ -4748,6 +4767,7 @@ paths:
       operationId: addScoreTrack
       parameters: []
       requestBody:
+        description: Details of the track to add to the score
         content:
           application/json:
             schema:
@@ -4844,6 +4864,7 @@ paths:
       operationId: updateScoreTrack
       parameters: []
       requestBody:
+        description: Track properties to update
         content:
           application/json:
             schema:
@@ -5015,6 +5036,7 @@ paths:
         Please note that this method includes an anti-spam system for public scores. We don't guarantee that your comments will be accepted and displayed to end users. Comments can be blocked by returning a `403` HTTP error and hidden from other users when the `spam` property is `true`.
       operationId: postScoreComment
       requestBody:
+        description: The comment to post on the score
         content:
           application/json:
             schema:
@@ -5083,6 +5105,7 @@ paths:
       summary: Update an existing comment
       operationId: updateScoreComment
       requestBody:
+        description: The updated comment
         content:
           application/json:
             schema:
@@ -5132,11 +5155,6 @@ paths:
       operationId: deleteScoreComment
       parameters:
       - $ref: "#/components/parameters/eventProperties"
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
       responses:
         "204":
           description: The comment has been deleted
@@ -5346,6 +5364,7 @@ paths:
       operationId: createScoreRevision
       parameters: []
       requestBody:
+        description: Details of the revision to create
         content:
           application/json:
             schema:
@@ -5649,6 +5668,7 @@ paths:
         schema:
           type: string
       requestBody:
+        description: Options of the export task
         content:
           application/json:
             schema:
@@ -5997,9 +6017,9 @@ components:
         The collection main privacy mode.
 
         - `private`: The collection is private and can only be accessed, modified, and administered by specified collaborators.
+      default: private
       enum:
       - private
-      default: private
     OmrImportedMetadata:
       type: object
       properties:
@@ -6022,6 +6042,7 @@ components:
     LicenseSources:
       type: string
       description: Source of the license
+      default: order
       enum:
       - order
       - trial
@@ -6031,7 +6052,6 @@ components:
       - appStore
       - playStore
       - musicfirst
-      default: order
     ClassDetails:
       required:
       - creationDate
@@ -6367,12 +6387,12 @@ components:
         When a file is synchronized from an external source (e.g. Google Drive) and the sharing options are changed on the source, Flat will choose the best privacy mode for the file.
 
         When using a [Flat for Education](https://flat.io/edu) account, some of the modes may not be available if disabled by an administrator of the organization (e.g. by default the `public` mode is not available).
+      default: private
       enum:
       - public
       - private
       - organizationPublic
       - privateLink
-      default: private
     EduResourceFolder:
       type: object
       properties:
@@ -6495,11 +6515,11 @@ components:
       type: string
       description: |
         The Education resource privacy mode.
+      default: private
       enum:
       - private
       - organizationPublic
       - public
-      default: private
     GroupCreation:
       required:
       - classroom
@@ -7369,11 +7389,11 @@ components:
     ScoreTrackState:
       type: string
       description: State of the track
+      default: draft
       enum:
       - draft
       - completed
       - deleted
-      default: draft
     ClassGroupIdsToApplyToAssignment:
       type: array
       description: |
@@ -7792,10 +7812,10 @@ components:
     ScoreTrackPurpose:
       type: string
       description: The purpose of the audio track
+      default: common
       enum:
       - common
       - performanceSubmission
-      default: common
     ClassDetailsGoogleClassroom:
       type: object
       properties:
@@ -7935,12 +7955,12 @@ components:
         * `flatEdu`:    [Flat for Education](https://flat.io/edu) - Music notation software for schools and educators
         * `msnippet`:   [Music Snippet](https://musicsnippet.com) - Embeddable music snippets for websites
         * `embed`:      [Flat Embed](https://flat.io/developers/embed) - Embeddable music notation editor
+      default: flat
       enum:
       - flat
       - flatEdu
       - msnippet
       - embed
-      default: flat
     AssignmentSubmissionUpdate:
       type: object
       properties:
@@ -8421,12 +8441,12 @@ components:
         role:
           type: string
           description: Role of the new account
+          default: user
           enum:
           - user
           - teacher
           - admin
           - accountAdmin
-          default: user
       description: User creation
     ClassAssignment:
       allOf:
@@ -9553,10 +9573,10 @@ components:
         * `library`: import the result into the Flat Library and create a score (default).
         * `musicxml`: finalize the result only, downloadable via `getOmrJobExport`. No score
           is created, for third-party integrations that do not use the Library.
+      default: library
       enum:
       - library
       - musicxml
-      default: library
     OmrDetectedInstrument:
       required:
       - index
@@ -9754,11 +9774,11 @@ components:
         organizationRole:
           type: string
           description: User's Organization Role
+          default: teacher
           enum:
           - admin
           - teacher
           - accountAdmin
-          default: teacher
       description: The parameters to create an organization invitation
       example:
         email: edu@flat.io
@@ -10809,12 +10829,12 @@ components:
     MediaScoreSharingMode:
       type: string
       description: The sharing mode of the score for classes post and assignments
+      default: read
       enum:
       - read
       - write
       - copy
       - performance
-      default: read
     AssignmentSubmissionHistoryState:
       type: string
       description: State of the submission history
@@ -11326,10 +11346,10 @@ components:
                   lengthUnit:
                     type: string
                     description: The unit to use for layout customizations
+                    default: cm
                     enum:
                     - cm
                     - inch
-                    default: cm
                   pageHeight:
                     type: number
                     description: The height of the page in chosen unit (`lengthUnit`).
